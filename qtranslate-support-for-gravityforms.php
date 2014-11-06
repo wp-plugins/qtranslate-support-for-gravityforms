@@ -3,7 +3,7 @@
 Plugin Name: qTranslate support for GravityForms
 Plugin URI: https://github.com/mweimerskirch/wordpress-qtranslate-support-for-gravityforms
 Description: Makes qTranslate work with GravityForms
-Version: 1.0.2
+Version: 1.0.3
 Author: Michel Weimerskirch
 Author URI: http://michel.weimerskirch.net
 License: MIT
@@ -51,9 +51,20 @@ function qtranslate_gform_pre_render($form)
 					$form['fields'][$id]['choices'][$value]['text'] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($key['text']);
 				}
 			}
+                        
+                        $form['fields'][$id]['nextButton']['text'] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($form['fields'][$id]['nextButton']['text']);
+                        $form['fields'][$id]['previousButton']['text'] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($form['fields'][$id]['previousButton']['text']);
 
 		}
 	}
+        if (isset($form['lastPageButton'])) {
+		$form['lastPageButton'] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($form['lastPageButton']);
+	}
+        if(isset($form['pagination'])){
+            foreach ($form['pagination']['pages'] as $id => $title){
+                $form['pagination']['pages'][$id] = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage($form['pagination']['pages'][$id]);
+            }
+        }
 	return $form;
 }
 
